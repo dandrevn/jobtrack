@@ -2,28 +2,17 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class UserModel extends Model
+class UserModel extends \CodeIgniter\Shield\Models\UserModel
 {
-    protected $table            = 'users';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
+    protected function initialize(): void 
+    {
+        // Initialize Shield's built-in user model configuration.
+        parent::initialize();
 
-    protected $allowedFields = [
-        'name',
-        'email',
-        'password_hash',
-    ];
-
-    protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-
-    protected $validationRules = [
-        'name' => 'required|min_length[2]|max_length[150]',
-        'email' => 'required|valid_email|max_length[255]|is_unique[users.email]',
-        'password_hash' => 'required',
-    ];
+        // Allow JobTrack to save its additional name field.
+        $this->allowedFields = array_merge(
+            $this->allowedFields,
+            ['name']
+        );
+    }
 }

@@ -9,6 +9,8 @@ use CodeIgniter\Format\XMLFormatter;
 
 class Format extends BaseConfig
 {
+    // Maximum nesting depth allowed when encoding JSON responses.
+    public int $jsonEncodeDepth = 512;
     /**
      * --------------------------------------------------------------------------
      * Available Response Formats
